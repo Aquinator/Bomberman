@@ -4,13 +4,11 @@
 #include "raylib.h"
 
 #include "animation.h"
+#include "bomb.h"
 
-#define BOMBERMAN_MOVEMENT_SPRITE 3
-#define BOMBERMAN_WIDTH 16
-#define BOMBERMAN_HEIGHT 24
-#define SCALE 2.5
-
-#define MAX_BOMBS 5
+#define BOMBERMAN_MOVEMENT_SPRITE 4
+#define BOMBERMAN_WIDTH 32
+#define BOMBERMAN_HEIGHT 48
 
 //defining the textures to the compiler
 extern Texture white_bomberman_texture_right;
@@ -28,7 +26,8 @@ typedef struct
     Vector2 position;
     Texture bombermanText;
     Animation bombermanAnimation;
-    Animation bombs[MAX_BOMBS];
+    Rectangle hitbox;
+    Bomb bomb;
     bool alive;
 } Bomberman; 
 
