@@ -9,6 +9,7 @@
 #define BOMBERMAN_MOVEMENT_SPRITE 4
 #define BOMBERMAN_WIDTH 32
 #define BOMBERMAN_HEIGHT 48
+#define BOMBERMAN_SPEED 2
 
 //defining the textures to the compiler
 extern Texture white_bomberman_texture_right;
@@ -31,14 +32,14 @@ typedef struct
     bool alive;
 } Bomberman; 
 
-void LoadBombermanTextures(void);
+void LoadTextures(void);
 
-void UnloadBombermanTextures(void);
+void UnloadTextures(void);
 
-void UpdateMovement_1(Bomberman *player);
+void UpdatePlayer_1(Bomberman *player);
 
-void UpdateMovement_2(Bomberman *player);
+void UpdatePlayer_2(Bomberman *player);
 
-void DrawGame(Bomberman player_1, Bomberman player_2);
+void DrawBomberman(Bomberman player_1, Bomberman player_2);
 
 #endif

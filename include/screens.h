@@ -1,6 +1,7 @@
 #ifndef SCREENS_H_
 #define SCREENS_H_
 
+#include "raylib.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 480
@@ -26,6 +27,9 @@ enum
 };
 
 void DrawMap(void);
+void DestroyMap(Vector2 Position);
+bool CheckCrossExplosion(int x, int y);
+bool CollisionMap(Rectangle playerRect);
 
 
 #endif

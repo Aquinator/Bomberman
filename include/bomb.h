@@ -30,7 +30,7 @@ typedef struct
     bool isExploding;        // boolean to draw the explosion
     Animation bombAnimation; // animation of the bomb
     Animation explosionAnimation; // animation of the explosion
-    Rectangle bombHitbox;
+    Rectangle bombHitbox;          // rectangle drawn in the screen
 } Bomb;
 
 Bomb PlaceBomb(Vector2 position);

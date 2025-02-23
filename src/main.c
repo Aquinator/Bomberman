@@ -5,32 +5,25 @@
 #include "bomberman.h"
 #include "bomb.h"
 #include "screens.h"
-#include "textures.h"
  
 // GLOBAL VARIABLES
 static float accumulatedTime_1 = 0.0f;
 static float accumulatedTime_2 = 0.0f;
 static float accumlatedTimeBomb[2] = {0.0f};
 static float accumulatedTimeExp[2] = {0.0f};
-// GLOBAL FUNCTIONS DECLARATION
-
-/////////////////////////////////////////////// 
 
 int main ()
 {
 	// Tell the window to use vsync and work on high DPI displays
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
-
 	// Create the window and OpenGL context
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Teste");
-
 	// Initalizing audio device
 	InitAudioDevice();
-
 	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
 	SearchAndSetResourceDir("resources");
 	// Loading the textures
-	LoadBombermanTextures();
+	LoadTextures();
 	// Declaring the players
 	Bomberman player_1 = 
 	{
@@ -42,7 +35,7 @@ int main ()
 			.frameTimer = 0.1,
 			.type = ONESHOT
 		},
-		.position = {0+BLOCK_SIZE+10,0+BLOCK_SIZE+10},
+		.position = {BLOCK_SIZE+(BOMBERMAN_WIDTH/2),BLOCK_SIZE+8},
 		.alive = true,
 		.bombermanText = white_bomberman_texture_right		
 	};
@@ -57,7 +50,7 @@ int main ()
 			.frameTimer = 0.1,
 			.type = ONESHOT
 		},
-		.position = {SCREEN_WIDTH-BLOCK_SIZE,0},
+		.position = {SCREEN_WIDTH-BLOCK_SIZE-(BOMBERMAN_WIDTH/2),BLOCK_SIZE+8},
 		.alive = true,
 		.bombermanText = black_bomberman_texture_left	
 	};
@@ -76,42 +69,26 @@ int main ()
 		SpriteAnimationUpdate(&player_1.bombermanAnimation, &accumulatedTime_1);
 		SpriteAnimationUpdate(&player_2.bombermanAnimation, &accumulatedTime_2);
 
-		UpdateMovement_1(&player_1);
-		UpdateMovement_2(&player_2);
-
-		if(IsKeyPressed(KEY_ENTER))
-		{
-			if(!player_1.bomb.isActive) player_1.bomb = PlaceBomb(player_1.position);
-		}
+		UpdatePlayer_1(&player_1);
+		UpdatePlayer_2(&player_2);
 		UpdateBomb(&player_1.bomb, &accumlatedTimeBomb[0], &accumulatedTimeExp[0]);
-
-		if(IsKeyPressed(KEY_SPACE)) 
-		{
-			if(!player_2.bomb.isActive) player_2.bomb = PlaceBomb(player_2.position);
-		}
 		UpdateBomb(&player_2.bomb, &accumlatedTimeBomb[1], &accumulatedTimeExp[1]);
 		// drawing the Game
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 		DrawMap();
-		DrawGame(player_1, player_2);
+		DrawBomberman(player_1, player_2);
 		DrawBomb(&player_1.bomb);
 		DrawBomb(&player_2.bomb);
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
 	}
-	// cleanup
-	// unload our texture so it can be cleaned up
-	UnloadBombermanTextures();
-	// unload our sound
+	// unload the resources 
+	UnloadTextures();
 	UnloadMusicStream(battle_music);
 	// destroy the window and cleanup the OpenGL context
 	CloseAudioDevice();
 	CloseWindow();
 	return 0;
 }
-
-// GLOBAL FUNCTIONS
-////////////	FUNCTIONS TO DEAL WITH BOMBS ARRAY	///////////
-
-/////////////////////////////////////////////////////////
+ 

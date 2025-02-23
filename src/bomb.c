@@ -1,8 +1,10 @@
 #include "bomb.h"
 #include "animation.h"
+#include "screens.h"
 
 Texture bomb_texture;
 Texture explosion_texture;
+extern Rectangle RecMap [MAP_HEIGHT][MAP_WIDTH]; //needed to check explosion collision
 
 Bomb PlaceBomb(Vector2 Position)
 {
@@ -76,22 +78,20 @@ void DrawBomb(Bomb *bomb)
         DrawTexturePro(bomb->bombTexture, source, (Rectangle){bomb->position.x, bomb->position.y,
             BOMB_WIDTH, BOMB_HEIGHT},
             (Vector2){(BOMB_WIDTH/2),(BOMB_HEIGHT/2)},0.0, WHITE);
+                
     }
     else if (bomb->isExploding)
     {
-        // Draw the explosion with animation
         Rectangle source = SpriteAnimationFrame(&bomb->explosionAnimation, EXPLOSION_SPRITE, EXPLOSION_HEIGHT, EXPLOSION_WIDTH);
-        bomb->bombHitbox = (Rectangle){bomb->position.x, bomb->position.y ,EXPLOSION_WIDTH, EXPLOSION_HEIGHT};
-
+        bomb->bombHitbox = (Rectangle){bomb->position.x, bomb->position.y, EXPLOSION_WIDTH, EXPLOSION_HEIGHT};
+        DestroyMap(bomb->position);
+        for(int i = 0; i<4; i++)
+        {
         DrawTexturePro(bomb->bombTexture, source,bomb->bombHitbox,
-            (Vector2){(EXPLOSION_WIDTH/2), (EXPLOSION_Y_CENTER)}, 0, WHITE);
-        DrawTexturePro(bomb->bombTexture, source,bomb->bombHitbox,
-            (Vector2){(EXPLOSION_WIDTH/2), (EXPLOSION_Y_CENTER)}, 90, WHITE);
-        DrawTexturePro(bomb->bombTexture, source,bomb->bombHitbox,
-            (Vector2){(EXPLOSION_WIDTH/2), (EXPLOSION_Y_CENTER)}, 180, WHITE);
-        DrawTexturePro(bomb->bombTexture, source,bomb->bombHitbox,
-            (Vector2){(EXPLOSION_WIDTH/2), (EXPLOSION_Y_CENTER)}, 270, WHITE);
+        (Vector2){(EXPLOSION_WIDTH/2), (EXPLOSION_Y_CENTER)}, 90*i, WHITE);
+        }
     }
 }
+
 
 
