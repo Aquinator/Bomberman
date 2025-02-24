@@ -1,6 +1,6 @@
 #include "bomb.h"
 #include "animation.h"
-#include "screens.h"
+#include "map.h"
 
 Texture bomb_texture;
 Texture explosion_texture;

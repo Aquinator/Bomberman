@@ -16,7 +16,6 @@ typedef struct
     int curr;
     float frameTimer; 
     Type type;
-    //Texture animeText;
 } Animation;
 
 Rectangle SpriteAnimationFrame(Animation *self, int numFramesPerLine, float objHeight, float objWidth);

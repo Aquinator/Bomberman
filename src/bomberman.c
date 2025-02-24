@@ -1,4 +1,4 @@
-#include "screens.h"
+#include "map.h"
 #include "bomberman.h"
 #include "bomb.h"
 
@@ -8,11 +8,17 @@ Texture white_bomberman_texture_right;
 Texture white_bomberman_texture_left;
 Texture white_bomberman_texture_front;
 Texture white_bomberman_texture_back;
+Texture white_bomberman_texture_death;
+Texture white_bomberman_texture_victory;
 
 Texture black_bomberman_texture_right;
 Texture black_bomberman_texture_left;
 Texture black_bomberman_texture_front;
 Texture black_bomberman_texture_back;
+Texture black_bomberman_texture_death;
+Texture black_bomberman_texture_victory;
+
+Texture victory;
 
 // Loading textures from the resources directory
 void LoadTextures(void)
@@ -21,11 +27,17 @@ void LoadTextures(void)
     white_bomberman_texture_left = LoadTexture("white_bomberman_left.png");
     white_bomberman_texture_front = LoadTexture("white_bomberman_front.png");
     white_bomberman_texture_back = LoadTexture("white_bomberman_back.png");
+	white_bomberman_texture_death = LoadTexture("white_bomberman_death.png");
+	white_bomberman_texture_victory = LoadTexture("white_bomberman_victory.png");
 
 	black_bomberman_texture_right = LoadTexture("black_bomberman_right.png");
     black_bomberman_texture_left = LoadTexture("black_bomberman_left.png");
     black_bomberman_texture_front = LoadTexture("black_bomberman_front.png");
     black_bomberman_texture_back = LoadTexture("black_bomberman_back.png");
+	black_bomberman_texture_death = LoadTexture("black_bomberman_death.png");
+	black_bomberman_texture_victory = LoadTexture("black_bomberman_victory.png");
+
+	victory = LoadTexture("Victory.png");
 
 	bomb_texture = LoadTexture("bomb.png");
 	explosion_texture = LoadTexture("explosion.png");
@@ -42,11 +54,17 @@ void UnloadTextures(void)
     UnloadTexture(white_bomberman_texture_front);
     UnloadTexture(white_bomberman_texture_left);
     UnloadTexture(white_bomberman_texture_right);
+	UnloadTexture(white_bomberman_texture_death);
+	UnloadTexture(white_bomberman_texture_victory);
 
 	UnloadTexture(black_bomberman_texture_back);
     UnloadTexture(black_bomberman_texture_front);
     UnloadTexture(black_bomberman_texture_left);
     UnloadTexture(black_bomberman_texture_right);
+	UnloadTexture(black_bomberman_texture_death);
+	UnloadTexture(black_bomberman_texture_victory);
+
+	UnloadTexture(victory);
 
 	UnloadTexture(bomb_texture);
 
@@ -58,8 +76,10 @@ void UnloadTextures(void)
 
 void UpdatePlayer_1(Bomberman *player)
 {
-	Rectangle ghost; // rectangle representing the player at this potential next position. 
-    if(IsKeyDown(KEY_RIGHT))
+	if(player->movement)
+	{
+		Rectangle ghost; // rectangle representing the player at this potential next position. 
+    	if(IsKeyDown(KEY_RIGHT))
 		{
 			player->bombermanText = white_bomberman_texture_right;
 			ghost = (Rectangle){player->position.x, player->position.y, BOMBERMAN_WIDTH/2, BOMBERMAN_HEIGHT/2};
@@ -107,14 +127,17 @@ void UpdatePlayer_1(Bomberman *player)
 		{
 			if(!player->bomb.isActive) player->bomb = PlaceBomb(player->position);
 		}
+	}
 }
 
 
 
 void UpdatePlayer_2(Bomberman *player)
 {
-	Rectangle ghost; // rectangle representing the player at this potential next position. 
-    if(IsKeyDown(KEY_D))
+	if(player->movement)
+	{
+		Rectangle ghost; // rectangle representing the player at this potential next position. 
+    	if(IsKeyDown(KEY_D))
 		{
 			player->bombermanText = black_bomberman_texture_right;
 			ghost = (Rectangle){player->position.x, player->position.y, BOMBERMAN_WIDTH/2, BOMBERMAN_HEIGHT/2};
@@ -162,21 +185,22 @@ void UpdatePlayer_2(Bomberman *player)
 		{
 			if(!player->bomb.isActive) player->bomb = PlaceBomb(player->position);
 		}
+	}
 }
 
 void DrawBomberman(Bomberman player_1, Bomberman player_2)
 {
-	Rectangle playerRec_1 = SpriteAnimationFrame(&player_1.bombermanAnimation, BOMBERMAN_MOVEMENT_SPRITE,
-	BOMBERMAN_HEIGHT, BOMBERMAN_WIDTH);
-	player_1.hitbox = (Rectangle){player_1.position.x, player_1.position.y, BOMBERMAN_WIDTH, BOMBERMAN_HEIGHT};
+		Rectangle playerRec_1 = SpriteAnimationFrame(&player_1.bombermanAnimation, BOMBERMAN_MOVEMENT_SPRITE,
+		BOMBERMAN_HEIGHT, BOMBERMAN_WIDTH);
+		player_1.hitbox = (Rectangle){player_1.position.x, player_1.position.y, BOMBERMAN_WIDTH, BOMBERMAN_HEIGHT};
 	
-	DrawTexturePro(player_1.bombermanText, playerRec_1, player_1.hitbox, 
-	(Vector2){BOMBERMAN_WIDTH/2, BOMBERMAN_HEIGHT/2},0.0, WHITE);
-	
-	Rectangle playerRec_2 = SpriteAnimationFrame(&player_2.bombermanAnimation, BOMBERMAN_MOVEMENT_SPRITE,
-	BOMBERMAN_HEIGHT, BOMBERMAN_WIDTH);
-	player_2.hitbox = (Rectangle){player_2.position.x, player_2.position.y, BOMBERMAN_WIDTH, BOMBERMAN_HEIGHT};
+		DrawTexturePro(player_1.bombermanText, playerRec_1, player_1.hitbox, 
+		(Vector2){BOMBERMAN_WIDTH/2, BOMBERMAN_HEIGHT/2},0.0, WHITE);
 
-	DrawTexturePro(player_2.bombermanText, playerRec_2, player_2.hitbox, 
-	(Vector2){BOMBERMAN_WIDTH/2, BOMBERMAN_HEIGHT/2},0.0, WHITE);
+		Rectangle playerRec_2 = SpriteAnimationFrame(&player_2.bombermanAnimation, BOMBERMAN_MOVEMENT_SPRITE,
+		BOMBERMAN_HEIGHT, BOMBERMAN_WIDTH);
+		player_2.hitbox = (Rectangle){player_2.position.x, player_2.position.y, BOMBERMAN_WIDTH, BOMBERMAN_HEIGHT};
+
+		DrawTexturePro(player_2.bombermanText, playerRec_2, player_2.hitbox, 
+		(Vector2){BOMBERMAN_WIDTH/2, BOMBERMAN_HEIGHT/2},0.0, WHITE);
 }

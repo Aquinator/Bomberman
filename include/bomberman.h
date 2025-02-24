@@ -16,11 +16,15 @@ extern Texture white_bomberman_texture_right;
 extern Texture white_bomberman_texture_left;
 extern Texture white_bomberman_texture_front;
 extern Texture white_bomberman_texture_back;
+extern Texture white_bomberman_texture_death;
+extern Texture white_bomberman_texture_victory;
 
 extern Texture black_bomberman_texture_right;
 extern Texture black_bomberman_texture_left;
 extern Texture black_bomberman_texture_front;
 extern Texture black_bomberman_texture_back;
+extern Texture black_bomberman_texture_death;
+extern Texture black_bomberman_texture_victory;
 
 typedef struct
 {
@@ -30,6 +34,8 @@ typedef struct
     Rectangle hitbox;
     Bomb bomb;
     bool alive;
+    bool movement;
+    Texture deathText;
 } Bomberman; 
 
 void LoadTextures(void);
