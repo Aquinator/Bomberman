@@ -1,6 +1,8 @@
 ## Bomberman
 
 ![Bomberman](screenshots/Screenshot_Game.png "Bomberman")
+![Bomberman](screenshots/Screenshot_White_Victory.png "White Bomberman Victory")
+![Bomberman](screenshots/Screenshot_Black_Victory.png "Black Bomberman Victory")
 
 ### Description
 
@@ -10,9 +12,9 @@ The game involves navigating a tilemap, placing bombs, and defeating the other p
 ### Controls
 
 Keyboard:
- - White Bomberman uses the arrow keys
+ - White Bomberman uses the arrow keys to movement
  - White Bomberman uses the ENTER key to place bombs
- - Black Bomberman uses the WASD keys
+ - Black Bomberman uses the WASD keys to movement
  - Black Bomberman uses the SPACE key to place bombs
 
 ## Supported Platforms
