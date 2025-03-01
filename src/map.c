@@ -62,8 +62,10 @@ void DrawMap()
 
 bool CollisionMap(Rectangle playerRect)
 {
+    // getting the position of the rectangle in the tilemap
     int x = (int)(playerRect.y / BLOCK_SIZE);
     int y = (int)(playerRect.x / BLOCK_SIZE);
+    // iterating in the "square" thah envolves the position
     for (int i = x-1; i <= x+1; i++) 
     {
         for (int j = y-1; j <= y+1; j++) 
