@@ -82,9 +82,11 @@ void DrawBomb(Bomb *bomb)
     }
     else if (bomb->isExploding)
     {
+        // Draw Explosion
         Rectangle source = SpriteAnimationFrame(&bomb->explosionAnimation, EXPLOSION_SPRITE, EXPLOSION_HEIGHT, EXPLOSION_WIDTH);
         bomb->bombHitbox = (Rectangle){bomb->position.x, bomb->position.y, EXPLOSION_WIDTH, EXPLOSION_HEIGHT};
-        DestroyMap(bomb->position);
+        DestroyMap(bomb->position); // check if there are bricks in nearby position
+        // drawing in four different directions
         for(int i = 0; i<4; i++)
         {
         DrawTexturePro(bomb->bombTexture, source,bomb->bombHitbox,

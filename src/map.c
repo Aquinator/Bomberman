@@ -62,9 +62,11 @@ void DrawMap()
 
 bool CollisionMap(Rectangle playerRect)
 {
-    for (int i = 0; i < MAP_HEIGHT; i++) 
+    int x = (int)(playerRect.y / BLOCK_SIZE);
+    int y = (int)(playerRect.x / BLOCK_SIZE);
+    for (int i = x-1; i <= x+1; i++) 
     {
-        for (int j = 0; j < MAP_WIDTH; j++) 
+        for (int j = y-1; j <= y+1; j++) 
         {
             if (tileMap[i][j] == BRICK || tileMap[i][j] == STONE) 
             {

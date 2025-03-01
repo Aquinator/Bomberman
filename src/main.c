@@ -86,7 +86,10 @@ int main ()
 		UpdateBomb(&player_2.bomb, &accumlatedTimeBomb[1], &accumulatedTimeExp[1]);
 
 		BombermanDeath(player_1.bomb, &player_2);
+		BombermanDeath(player_1.bomb, &player_1);
 		BombermanDeath(player_2.bomb, &player_1);
+		BombermanDeath(player_2.bomb, &player_2);
+
 		// drawing the Game
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
@@ -97,6 +100,7 @@ int main ()
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
 		}
+		// checking wich player win and draw the respective screen
 		if(!player_1.alive)
 		{
 			ClearBackground(RAYWHITE);
@@ -120,6 +124,7 @@ int main ()
 // Global Function to check collision between the explosion and the player
 void BombermanDeath(Bomb bomba, Bomberman *player)
 {
+	// checking the conditions to the death
 	if(player->alive)
 	{
 		if(bomba.isExploding)
